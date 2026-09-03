@@ -59,18 +59,7 @@ pipeline {
             }
         }
 
-        stage('AKS Crt {
-                    env.IMAGE_TAG = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
-                    echo "IMAGE_TAG generado: ${env.IMAGE_TAG}"
-                }
-            }
-        }
-
-        stage('[CI] Build & Push to ACR') {
-            steps {
-                sh '''
-                  echo ">>> Login al ACR..."
-                  az edentials') {
+        stage('AKS Credentials') {
             steps {
                 sh '''
                   echo ">>> Obteniendo credenciales de AKS..."
@@ -84,7 +73,18 @@ pipeline {
         
         stage('[CI] Get Git Commit Short SHA') {
             steps {
-                scripacr login --name $ACR_NAME
+                script {
+                    env.IMAGE_TAG = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
+                    echo "IMAGE_TAG generado: ${env.IMAGE_TAG}"
+                }
+            }
+        }
+
+        stage('[CI] Build & Push to ACR') {
+            steps {
+                sh '''
+                  echo ">>> Login al ACR..."
+                  az acr login --name $ACR_NAME
 
                   echo ">>> Build de imagen..."
                   docker build -t $ACR_LOGIN_SERVER/$IMAGE_NAME:$IMAGE_TAG .
