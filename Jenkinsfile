@@ -1,11 +1,11 @@
 pipeline {
-    agent any
- 
-    stages {
-        stage('Hello') {
-            steps {
-                echo 'Hola mundo desde Jenkins!'
-            }
-        }
-    }
+    agent any
+
+    stages {
+        stage('Hello') {
+            steps {
+                echo 'Hello World desde Jenkins!'
+            }
+        }
+    }
 }
